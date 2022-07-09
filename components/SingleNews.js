@@ -1,8 +1,10 @@
 import { View, Text, StyleSheet, Dimensions, Image, TouchableOpacity, ImageBackground, Linking, useWindowDimensions } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
+import { NewsContext } from '../API/Context';
 
 const SingleNews = ({ item, index }) => {
   const { height: windowHeight, width: windowWidth } = useWindowDimensions();
+  const { darkTheme } = useContext(NewsContext)
 
   return (
     <View style={{
@@ -16,10 +18,10 @@ const SingleNews = ({ item, index }) => {
         style={{ height: "45%", resizeMode: "cover", width: windowWidth }}
       />
 
-      <View style={{ ...styles.description, backgroundColor: "#282C35" }}>
-        <Text style={{ ...styles.title, color: "white" }}>{item.title.slice(0, 60)}...</Text>
-        <Text style={{ ...styles.content, color: "white" }}>{item.description}</Text>
-        <Text style={{ color: "white" }}>
+      <View style={{ ...styles.description, backgroundColor: darkTheme ? "#282C35" : "white" }}>
+        <Text style={{ ...styles.title, color: darkTheme ? "white" : "black" }}>{item.title.slice(0, 60)}...</Text>
+        <Text style={{ ...styles.content, color: darkTheme ? "white" : "black" }}>{item.description}</Text>
+        <Text style={{ color: darkTheme ? "white" : "black" }}>
           News by-
           <Text>{item.author ?? 'Anonymous'}</Text>
         </Text>
@@ -68,7 +70,7 @@ const styles = StyleSheet.create({
   },
   footer: {
     height: 80,
-    opacity: 0,
+    // opacity: 0,
     width: Dimensions.get('window').width,
     position: 'absolute',
     bottom: 0,

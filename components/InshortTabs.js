@@ -6,19 +6,19 @@ import NewsScreen from '../Screens/NewsScreen';
 import TopNavigation from './TopNavigation';
 import { NewsContext } from '../API/Context';
 
-    //*TODO: TEST
-    const FirstRoute = () => (
-        <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
-      );
+//*TODO: TEST
+// const FirstRoute = () => (
+//     <View style={{ flex: 1, backgroundColor: '#ff4081' }} />
+//   );
 
-    const SecondRoute = () => (
-        <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
-      );
+// const SecondRoute = () => (
+//     <View style={{ flex: 1, backgroundColor: '#673ab7' }} />
+//   );
 
 
 const InshortTabs = () => {
 
-    const {index,setIndex}=useContext(NewsContext);  // Accesing from the Context API
+    const { index, setIndex } = useContext(NewsContext);  // Accesing from the Context API
 
     const layout = useWindowDimensions();
 
@@ -30,16 +30,16 @@ const InshortTabs = () => {
     const renderScene = SceneMap({
         first: DiscoverScreen,
         second: NewsScreen,
-      });
-      
+    });
+
     return (
         <TabView
-        navigationState={{ index, routes }}
-        renderScene={renderScene}
-        onIndexChange={setIndex}
-        initialLayout={{width:layout.width}}
-        renderTabBar={()=>
-            <TopNavigation index={index} setIndex={setIndex}/>
+            navigationState={{ index, routes }}
+            renderScene={renderScene}
+            onIndexChange={setIndex}
+            initialLayout={{ width: layout.width }}
+            renderTabBar={() =>
+                <TopNavigation index={index} setIndex={setIndex} />
             }
         />
     )

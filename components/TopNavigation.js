@@ -1,15 +1,22 @@
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native'
-import React from 'react'
+import React, { useContext } from 'react'
 import { MaterialCommunityIcons, SimpleLineIcons } from '@expo/vector-icons'
+import { NewsContext } from '../API/Context';
 
 const TopNavigation = ({ setIndex, index }) => {
-
+  const { category, fetchNews, setDarkTheme, darkTheme } = useContext(NewsContext);
+  // console.log(category);
 
   return (
-    <View style={{ ...styles.container, backgroundColor: "#282c35" }}>
+    <View style={{ ...styles.container, backgroundColor: darkTheme ? "#282c35" : "white" }}>
 
       {index === 0 ?
-        (<TouchableOpacity style={styles.left}>
+        (<TouchableOpacity style={styles.left}
+          onPress={() => {
+            setDarkTheme(prev => !prev);
+            console.log(darkTheme)
+          }}
+        >
           <Text>
             <MaterialCommunityIcons name="theme-light-dark" size={24} color="#007FFF" />
           </Text>
@@ -19,20 +26,25 @@ const TopNavigation = ({ setIndex, index }) => {
           >
             <SimpleLineIcons name="arrow-left" size={15} color="#007FFF" />
             {/* <Feather name="chevron-left" size={24} color="black" /> */}
-            <Text style={{ ...styles.text, color: "lightgrey" }}>Discover</Text>
+            <Text style={{ ...styles.text, color: darkTheme ? "white" : "black" }}>Discover</Text>
           </TouchableOpacity>
         )}
 
-      {/* //*TODO: Middle Section  */}
-      <Text style={{ ...styles.center, color: "white" }}>
-        {index ? "All News" : "Discover"}
+      <Text style={{ ...styles.center, color: darkTheme ? "white" : "black" }}>
+        {
+          index ? category : "Discover"
+        }
       </Text>
 
-      {/* //*TODO: Right Section */}
 
       {
         index ?
-          (<TouchableOpacity style={styles.right}>
+          (<TouchableOpacity
+            onPress={() => {
+              // console.log("news fetched")
+              fetchNews('general');  //TODO: fetch news not working fixing
+            }}
+            style={styles.right}>
             <Text style={styles.text}>
               <SimpleLineIcons name="reload" size={24} color="#007FFF" />
             </Text>
@@ -42,7 +54,7 @@ const TopNavigation = ({ setIndex, index }) => {
             <TouchableOpacity
               style={styles.left}
               onPress={() => setIndex(index == 0 ? 1 : 0)}>
-              <Text style={{ ...styles.text, color: "white" }}>All News</Text>
+              <Text style={{ ...styles.text, color: darkTheme ? "lightgrey" : "black" }}>{category}</Text>
               <SimpleLineIcons name="arrow-right" size={15} color="#007FFF" />
             </TouchableOpacity>
           )
@@ -59,8 +71,8 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     padding: 10,
     alignItems: 'center',
-    borderBottomColor: "black",
-    borderBottomWidth: 0.5
+    borderBottomColor: "lightgrey",
+    borderBottomWidth: 0.7
   },
 
   left: {
@@ -80,10 +92,13 @@ const styles = StyleSheet.create({
     borderBottomWidth: 5,
     borderRadius: 10,
     fontSize: 16,
-    fontWeight: "700"
+    fontWeight: "700",
+    textTransform: 'capitalize'
   },
   text: {
     fontSize: 16,
+    textTransform: 'capitalize'
+
   }
 })
 

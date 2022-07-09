@@ -6,11 +6,11 @@ import SingleNews from '../components/SingleNews';
 
 const NewsScreen = () => {
 
+  const { darkTheme } = useContext(NewsContext)
   const windowHeight = Dimensions.get('window').height;
 
   const { news: { articles } } = useContext(NewsContext);
 
-  //  const TestNews=()=><View><Text>this is news</Text></View>
 
   const [activeIndex, setActiveIndex] = useState();
   return (
